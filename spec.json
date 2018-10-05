@@ -131,7 +131,24 @@
               "selection": {
                 "brush": {
                   "type": "single",
-                  "on": "mousemove",
+                  "on": {
+                    "merge": [
+                      {
+                        "type": "mousemove",
+                        "between": [
+                          {
+                            "type": "mousedown"
+                          },
+                          {
+                            "type": "mouseup"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "mousedown"
+                      }
+                    ]
+                  },
                   "encodings": [
                     "x"
                   ],
@@ -406,7 +423,24 @@
               "selection": {
                 "brush": {
                   "type": "single",
-                  "on": "mousemove",
+                  "on": {
+                    "merge": [
+                      {
+                        "type": "mousemove",
+                        "between": [
+                          {
+                            "type": "mousedown"
+                          },
+                          {
+                            "type": "mouseup"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "mousedown"
+                      }
+                    ]
+                  },
                   "encodings": [
                     "x"
                   ],
