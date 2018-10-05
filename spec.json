@@ -536,6 +536,9 @@
           "encoding": {
             "stroke": {
               "value": "#eeeeee"
+            },
+            "tooltip": {
+              "value": null
             }
           }
         },
