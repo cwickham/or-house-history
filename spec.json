@@ -113,6 +113,9 @@
               },
               "legend": null
             },
+            "opacity": {
+              "value": 0.8
+            },
             "tooltip": {
               "value": null
             }
@@ -310,11 +313,36 @@
               },
               "legend": {
                 "title": null,
+                "orient": "bottom",
+                "direction": "horizontal",
                 "values": [
                   "Democrat",
                   "Republican",
                   "Independent",
                   "Unknown Affiliation"
+                ]
+              }
+            },
+            "opacity": {
+              "field": "Gender",
+              "type": "nominal",
+              "scale": {
+                "domain": [
+                  "Male",
+                  "Female"
+                ],
+                "range": [
+                  0.8,
+                  0.25
+                ]
+              },
+              "legend": {
+                "title": null,
+                "orient": "bottom",
+                "direction": "horizontal",
+                "values": [
+                  "Male",
+                  "Female"
                 ]
               }
             },
@@ -341,6 +369,5 @@
       ]
     }
   ],
-  "spacing": 100,
-  "center": true
+  "spacing": 100
 }
