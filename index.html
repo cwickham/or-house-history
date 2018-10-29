@@ -21,7 +21,11 @@
   
   <script>
     const spec = "spec.json";
-  	vegaEmbed('#vis', spec, {defaultStyle: true}).catch(console.warn);
+  	vegaEmbed('#vis', spec, {
+      defaultStyle: true, 
+  	  tooltip: {sanitize: (value) => String(value)},
+  	  actions: false
+  	}).catch(console.warn);
   </script>
 
 </body>

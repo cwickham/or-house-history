@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
   "data": {
-    "url": "data/session_makeup_vega_small.csv"
+    "url": "data/vega-all.csv"
   },
   "description": "House majority over time",
   "config": {
@@ -19,526 +19,120 @@
   },
   "hconcat": [
     {
-      "vconcat": [
+      "width": 200,
+      "height": 600,
+      "transform": [
         {
-          "height": 150,
-          "width": 500,
-          "layer": [
-            {
-              "transform": [
-                {
-                  "filter": {
-                    "field": "District",
-                    "valid": true
-                  }
-                },
-                {
-                  "window": [
-                    {
-                      "op": "count",
-                      "field": "*",
-                      "as": "n_party_year"
-                    }
-                  ],
-                  "groupby": [
-                    "session_year",
-                    "party"
-                  ],
-                  "frame": [
-                    null,
-                    null
-                  ]
-                },
-                {
-                  "window": [
-                    {
-                      "op": "count",
-                      "field": "*",
-                      "as": "n_year"
-                    }
-                  ],
-                  "groupby": [
-                    "session_year"
-                  ],
-                  "frame": [
-                    null,
-                    null
-                  ]
-                },
-                {
-                  "calculate": "datum.n_party_year/datum.n_year - 0.5",
-                  "as": "prop"
-                },
-                {
-                  "calculate": "datum.prop < 0 ? 'R' : 'D'",
-                  "as": "majority_party"
-                },
-                {
-                  "calculate": "abs(datum.prop)",
-                  "as": "abs_prop"
-                },
-                {
-                  "filter": {
-                    "field": "party",
-                    "equal": "D"
-                  }
-                }
-              ],
-              "mark": "bar",
-              "encoding": {
-                "x": {
-                  "field": "session_year",
-                  "type": "quantitative",
-                  "axis": {
-                    "format": "-d",
-                    "title": "",
-                    "values": [1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020]
-                  }
-                },
-                "y": {
-                  "aggregate": "mean",
-                  "field": "abs_prop",
-                  "type": "quantitative",
-                  "axis": {
-                    "title": "Majority party lead",
-                    "format": "p"
-                  }
-                },
-                "color": {
-                  "field": "majority_party",
-                  "type": "ordinal",
-                  "legend": null,
-                  "scale": {
-                    "domain": [
-                      "D",
-                      "I",
-                      "R",
-                      "Vacant",
-                      "Mixed"
-                    ],
-                    "range": [
-                      "#377EB8",
-                      "#FFD92F",
-                      "#E41A1C",
-                      "#CCCCCC",
-                      "#B279A2"
-                    ]
-                  }
-                }
-              }
-            },
-            {
-              "selection": {
-                "brush": {
-                  "type": "single",
-                  "on": {
-                    "merge": [
-                      {
-                        "type": "mousemove",
-                        "between": [
-                          {
-                            "type": "mousedown"
-                          },
-                          {
-                            "type": "mouseup"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "mousedown"
-                      }
-                    ]
-                  },
-                  "encodings": [
-                    "x"
-                  ],
-                  "nearest": true,
-                  "resolve": "global",
-                  "empty": "none"
-                }
-              },
-              "mark": {
-                "type": "point"
-              },
-              "encoding": {
-                "opacity": {
-                  "value": 0
-                },
-                "x": {
-                  "field": "session_year",
-                  "type": "quantitative",
-                  "axis": {
-                    "format": "-d",
-                    "title": "",
-                    "values": [1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020]
-                  }
-                }
-              }
-            },
-            {
-              "transform": [
-                {
-                  "filter": {
-                    "and": [
-                      "brush.session_year",
-                      {
-                        "selection": "brush"
-                      }
-                    ]
-                  }
-                }
-              ],
-              "mark": "rule",
-              "encoding": {
-                "x": {
-                  "field": "session_year",
-                  "type": "quantitative",
-                  "axis": {
-                    "format": "-d",
-                    "title": "",
-                    "values": [1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020]
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "height": 150,
-          "width": 500,
-          "layer": [
-            {
-              "transform": [
-                {
-                  "filter": {
-                    "field": "District",
-                    "valid": true
-                  }
-                },
-                {
-                  "window": [
-                    {
-                      "op": "count",
-                      "field": "*",
-                      "as": "n_party_gender_year"
-                    }
-                  ],
-                  "groupby": [
-                    "session_year",
-                    "Gender",
-                    "party"
-                  ],
-                  "frame": [
-                    null,
-                    null
-                  ]
-                },
-                {
-                  "window": [
-                    {
-                      "op": "count",
-                      "field": "*",
-                      "as": "n_party_year"
-                    }
-                  ],
-                  "groupby": [
-                    "session_year",
-                    "party"
-                  ],
-                  "frame": [
-                    null,
-                    null
-                  ]
-                },
-                {
-                  "calculate": "datum.n_party_gender_year/datum.n_party_year",
-                  "as": "prop"
-                },
-                {
-                  "filter": {
-                    "field": "Gender",
-                    "equal": "Female"
-                  }
-                },
-                {
-                  "filter": {
-                    "field": "party",
-                    "oneOf": [
-                      "D",
-                      "R"
-                    ]
-                  }
-                }
-              ],
-              "mark": "line",
-              "encoding": {
-                "x": {
-                  "field": "session_year",
-                  "type": "quantitative",
-                  "axis": {
-                    "format": "-d",
-                    "title": "",
-                    "values": [1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020]
-                  }
-                },
-                "y": {
-                  "field": "prop",
-                  "type": "quantitative",
-                  "scale": {
-                    "domain": [0, 0.6]
-                  },
-                  "axis": {
-                    "format": "p",
-                    "title": "% Female"
-                  }
-                },
-                "color": {
-                  "field": "party",
-                  "type": "ordinal",
-                  "legend": null,
-                  "scale": {
-                    "domain": [
-                      "D",
-                      "I",
-                      "R",
-                      "Vacant",
-                      "Mixed"
-                    ],
-                    "range": [
-                      "#377EB8",
-                      "#FFD92F",
-                      "#E41A1C",
-                      "#CCCCCC",
-                      "#B279A2"
-                    ]
-                  }
-                },
-                "opacity": {
-                  "value": 0.25
-                }
-              }
-            },
-            {
-              "transform": [
-                {
-                  "filter": {
-                    "field": "District",
-                    "valid": true
-                  }
-                },
-                {
-                  "window": [
-                    {
-                      "op": "count",
-                      "field": "*",
-                      "as": "n_gender_year"
-                    }
-                  ],
-                  "groupby": [
-                    "session_year",
-                    "Gender"
-                  ],
-                  "frame": [
-                    null,
-                    null
-                  ]
-                },
-                {
-                  "window": [
-                    {
-                      "op": "count",
-                      "field": "*",
-                      "as": "n_year"
-                    }
-                  ],
-                  "groupby": [
-                    "session_year"
-                  ],
-                  "frame": [
-                    null,
-                    null
-                  ]
-                },
-                {
-                  "calculate": "datum.n_gender_year/datum.n_year",
-                  "as": "prop"
-                },
-                {
-                  "filter": {
-                    "field": "Gender",
-                    "equal": "Female"
-                  }
-                }
-              ],
-              "encoding": {
-                "x": {
-                  "field": "session_year",
-                  "type": "quantitative"
-                },
-                "y": {
-                  "field": "prop",
-                  "type": "quantitative",
-                  "axis": {
-                    "format": "p",
-                    "title": "% Female"
-                  }
-                },
-                "color": {
-                  "value": "black"
-                }
-              },
-              "layer": [
-                {
-                  "mark": "line"
-                },
-                {
-                  "data": {
-                    "values": [
-                      {
-                        "xval": 1939,
-                        "yval": 0.05,
-                        "label": "Overall"
-                      }
-                    ]
-                  },
-                  "mark": "text",
-                  "encoding": {
-                    "text": {
-                      "field": "label",
-                      "type": "nominal"
-                    },
-                    "x": {
-                      "field": "xval",
-                      "type": "quantitative"
-                    },
-                    "y": {
-                      "field": "yval",
-                      "type": "quantitative"
-                    }
-                  }
-                }
-              ]
-            },
-            {
-              "selection": {
-                "brush": {
-                  "type": "single",
-                  "on": {
-                    "merge": [
-                      {
-                        "type": "mousemove",
-                        "between": [
-                          {
-                            "type": "mousedown"
-                          },
-                          {
-                            "type": "mouseup"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "mousedown"
-                      }
-                    ]
-                  },
-                  "encodings": [
-                    "x"
-                  ],
-                  "nearest": true,
-                  "resolve": "global",
-                  "empty": "none"
-                }
-              },
-              "mark": {
-                "type": "point"
-              },
-              "encoding": {
-                "opacity": {
-                  "value": 0
-                },
-                "x": {
-                  "field": "session_year",
-                  "type": "quantitative",
-                  "axis": {
-                    "format": "-d",
-                    "title": "",
-                    "values": [1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020]
-                  }
-                }
-              }
-            },
-            {
-              "transform": [
-                {
-                  "filter": {
-                    "and": [
-                      "brush.session_year",
-                      {
-                        "selection": "brush"
-                      }
-                    ]
-                  }
-                }
-              ],
-              "mark": "rule",
-              "encoding": {
-                "x": {
-                  "field": "session_year",
-                  "type": "quantitative",
-                  "axis": {
-                    "format": "-d",
-                    "title": "",
-                    "values": [1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020]
-                  }
-                }
-              }
-            }
-          ]
+          "filter": {
+            "field": "data",
+            "equal": "majority"
+          }
         }
-      ]
-    },
-    {
-      "width": 500,
-      "height": 290,
-      "encoding": {
-        "x": {
-          "field": "x",
-          "type": "quantitative",
-          "scale": {
-            "domain": [
-              0.6,
-              10.75
-            ],
-            "nice": false
-          },
-          "axis": null
-        },
-        "y": {
-          "field": "y",
-          "type": "quantitative",
-          "scale": {
-            "domain": [
-              0.6,
-              6.5
-            ],
-            "nice": false
-          },
-          "axis": null
-        }
-      },
+      ],
       "layer": [
         {
-          "mark": {
-            "type": "square",
-            "size": 1700,
-            "strokeWidth": 1
+          "selection": {
+            "brush": {
+              "type": "single",
+              "on": {
+                "merge": [
+                  {
+                    "type": "mousemove",
+                    "between": [
+                      {
+                        "type": "mousedown"
+                      },
+                      {
+                        "type": "mouseup"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "mousedown"
+                  }
+                ]
+              },
+              "fields": [
+                "session_year"
+              ],
+              "nearest": true,
+              "resolve": "global",
+              "empty": "none"
+            }
           },
+          "mark": "area",
           "encoding": {
-            "stroke": {
-              "value": "#eeeeee"
+            "y": {
+              "field": "session_year",
+              "type": "temporal",
+              "timeUnit": "year",
+              "sort": "descending",
+              "axis": {
+                "title": "",
+                "values": [1860, 1875, 1900, 1925, 1950, 1975, 2000, 2018]
+              }
+            },
+            "x": {
+              "field": "n_over_side",
+              "type": "quantitative",
+              "axis": {
+                "title": "Seats over majority",
+                "orient": "top"
+              }
+            },
+            "color": {
+              "field": "party",
+              "type": "nominal",
+              "scale": {
+                "domain": [
+                  "Democrat",
+                  "Independent",
+                  "Progressive Democrat",
+                  "Progressive Republican",
+                  "People's",
+                  "Federalist",
+                  "Citizen",
+                  "Union",
+                  "Republican",
+                  "Whig",
+                  "Unknown Affiliation"
+                ],
+                "range": [
+                  "#377EB8",
+                  "#FFD92F",
+                  "#8C7FCF",
+                  "#A34E89",
+                  "#8dd3c7",
+                  "#984ea3",
+                  "#F58518",
+                  "#a65628",
+                  "#E41A1C",
+                  "#D8B585",
+                  "#999999"
+                ]
+              },
+              "legend": null
             },
             "tooltip": {
               "value": null
+            }
+          }
+        },
+        {
+          "mark": "rect",
+          "encoding": {
+            "y": {
+              "field": "session_year",
+              "type": "temporal",
+              "timeUnit": "year",
+              "sort": "descending"
+            },
+            "opacity": {
+              "value": 0
+            },
+            "tooltip": {
+              "field": "caption",
+              "type": "nominal"
             }
           }
         },
@@ -550,55 +144,177 @@
               }
             }
           ],
-          "mark": {
-            "type": "square",
-            "size": 1700
-          },
+          "mark": "rule",
           "encoding": {
+            "y": {
+              "field": "session_year",
+              "type": "temporal",
+              "timeUnit": "year",
+              "sort": "descending"
+            },
+            "tooltip": {
+              "value": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "vconcat": [
+        {
+          "width": 400,
+          "height": 20,
+          "layer": [
+            {
+              "transform": [
+                {
+                  "filter": {
+                    "field": "data",
+                    "equal": "legislators"
+                  }
+                },
+                {
+                  "filter": {
+                    "selection": "brush"
+                  }
+                }
+              ],
+              "mark": "text",
+              "encoding": {
+                "x": {
+                  "value": 0
+                },
+                "y": {
+                  "value": 0
+                },
+                "text": {
+                  "field": "session_year",
+                  "type": "temporal",
+                  "timeUnit": "year"
+                },
+                "opacity": {
+                  "value": 0
+                },
+                "tooltip": {
+                  "value": null
+                }
+              }
+            },
+            {
+              "transform": [
+                {
+                  "filter": {
+                    "field": "data",
+                    "equal": "legislators"
+                  }
+                },
+                {
+                  "filter": {
+                    "selection": "brush"
+                  }
+                },
+                {
+                  "calculate": "datum.session_year + 31556952000/2",
+                  "as": "year"
+                }
+              ],
+              "mark": {
+                "type": "text",
+                "fontSize": 20
+              },
+              "encoding": {
+                "x": {
+                  "value": 0
+                },
+                "y": {
+                  "value": 0
+                },
+                "text": {
+                  "field": "year",
+                  "type": "temporal",
+                  "timeUnit": "year"
+                },
+                "tooltip": {
+                  "value": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "width": 400,
+          "height": 400,
+          "transform": [
+            {
+              "filter": {
+                "field": "data",
+                "equal": "legislators"
+              }
+            },
+            {
+              "lookup": "seat",
+              "from": {
+                "data": {
+                  "url": "data/seats.json",
+                  "format": {
+                    "type": "json",
+                    "property": "features"
+                  }
+                },
+                "key": "properties.seat"
+              },
+              "as": "shape"
+            },
+            {
+              "filter": {
+                "selection": "brush"
+              }
+            }
+          ],
+          "mark": "geoshape",
+          "encoding": {
+            "shape": {
+              "field": "shape",
+              "type": "geojson"
+            },
             "color": {
               "field": "party",
-              "type": "ordinal",
+              "type": "nominal",
               "scale": {
                 "domain": [
-                  "D",
-                  "I",
-                  "R",
-                  "Vacant",
-                  "Mixed"
+                  "Democrat",
+                  "Independent",
+                  "Progressive Democrat",
+                  "Progressive Republican",
+                  "People's",
+                  "Federalist",
+                  "Citizen",
+                  "Union",
+                  "Republican",
+                  "Whig",
+                  "Unknown Affiliation"
                 ],
                 "range": [
                   "#377EB8",
                   "#FFD92F",
+                  "#8C7FCF",
+                  "#A34E89",
+                  "#8dd3c7",
+                  "#984ea3",
+                  "#F58518",
+                  "#a65628",
                   "#E41A1C",
-                  "#CCCCCC",
-                  "#B279A2"
+                  "#D8B585",
+                  "#999999"
                 ]
               },
               "legend": {
-                "orient": "top",
-                "direction": "horizontal"
-              }
-            },
-            "opacity": {
-              "field": "Gender",
-              "type": "ordinal",
-              "scale": {
-                "domain": [
-                  "Male",
-                  "",
-                  "Female"
-                ],
-                "range": [
-                  1,
-                  0.25
-                ]
-              },
-              "legend": {
-                "orient": "top",
-                "direction": "horizontal",
+                "title": null,
                 "values": [
-                  "Male",
-                  "Female"
+                  "Democrat",
+                  "Republican",
+                  "Independent",
+                  "Unknown Affiliation"
                 ]
               }
             },
@@ -608,11 +324,11 @@
                 "type": "nominal"
               },
               {
-                "field": "District",
+                "field": "Residence",
                 "type": "nominal"
               },
               {
-                "field": "Party",
+                "field": "party",
                 "type": "nominal"
               },
               {
@@ -625,6 +341,6 @@
       ]
     }
   ],
-  "spacing": 50,
+  "spacing": 100,
   "center": true
 }
