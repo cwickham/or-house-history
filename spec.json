@@ -60,7 +60,10 @@
               "empty": "none"
             }
           },
-          "mark": "area",
+          "mark": {
+            "type": "area",
+            "line": true
+          },
           "encoding": {
             "y": {
               "field": "session_year",
@@ -75,6 +78,7 @@
             "x": {
               "field": "n_over_side",
               "type": "quantitative",
+              "stack": null,
               "axis": {
                 "title": "Seats over majority",
                 "orient": "top"
@@ -114,7 +118,7 @@
               "legend": null
             },
             "opacity": {
-              "value": 0.8
+              "value": 0.5
             },
             "tooltip": {
               "value": null
@@ -182,45 +186,6 @@
                   }
                 }
               ],
-              "mark": "text",
-              "encoding": {
-                "x": {
-                  "value": 0
-                },
-                "y": {
-                  "value": 0
-                },
-                "text": {
-                  "field": "session_year",
-                  "type": "temporal",
-                  "timeUnit": "year"
-                },
-                "opacity": {
-                  "value": 0
-                },
-                "tooltip": {
-                  "value": null
-                }
-              }
-            },
-            {
-              "transform": [
-                {
-                  "filter": {
-                    "field": "data",
-                    "equal": "legislators"
-                  }
-                },
-                {
-                  "filter": {
-                    "selection": "brush"
-                  }
-                },
-                {
-                  "calculate": "datum.session_year + 31556952000/2",
-                  "as": "year"
-                }
-              ],
               "mark": {
                 "type": "text",
                 "fontSize": 20
@@ -233,7 +198,8 @@
                   "value": 0
                 },
                 "text": {
-                  "field": "year",
+                  "aggregate": "min",
+                  "field": "session_year",
                   "type": "temporal",
                   "timeUnit": "year"
                 },
@@ -280,6 +246,97 @@
               "field": "shape",
               "type": "geojson"
             },
+            "opacity": {
+              "value": 0.75
+            },
+            "tooltip": {
+              "field": "caption"
+            },
+            "fill": {
+              "field": "party",
+              "type": "nominal",
+              "scale": {
+                "domain": [
+                  "Democrat",
+                  "Independent",
+                  "Progressive Democrat",
+                  "Progressive Republican",
+                  "People's",
+                  "Federalist",
+                  "Citizen",
+                  "Union",
+                  "Republican",
+                  "Whig",
+                  "Unknown Affiliation"
+                ],
+                "range": [
+                  "#377EB8",
+                  "#FFD92F",
+                  "#8C7FCF",
+                  "#A34E89",
+                  "#8dd3c7",
+                  "#984ea3",
+                  "#F58518",
+                  "#a65628",
+                  "#E41A1C",
+                  "#D8B585",
+                  "#999999"
+                ]
+              },
+              "legend": null
+            },
+            "stroke": {
+              "value": "#999"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": {
+                "field": "data",
+                "equal": "legislators"
+              }
+            },
+            {
+              "filter": {
+                "selection": "brush"
+              }
+            },
+            {
+              "calculate": "30",
+              "as": "party_pos"
+            },
+            {
+              "calculate": "'seats'",
+              "as": "text_seats"
+            }
+          ],
+          "encoding": {
+            "y": {
+              "field": "party",
+              "type": "nominal",
+              "sort": {
+                "op": "distinct",
+                "field": "Legislator",
+                "order": "descending"
+              },
+              "scale": {
+                "rangeStep": 25
+              },
+              "axis": null
+            },
+            "x": {
+              "field": "party_pos",
+              "type": "quantitative",
+              "scale": {
+                "domain": [
+                  0,
+                  60
+                ]
+              },
+              "axis": null
+            },
             "color": {
               "field": "party",
               "type": "nominal",
@@ -311,62 +368,69 @@
                   "#999999"
                 ]
               },
-              "legend": {
-                "title": null,
-                "orient": "bottom",
-                "direction": "horizontal",
-                "values": [
-                  "Democrat",
-                  "Republican",
-                  "Independent",
-                  "Unknown Affiliation"
-                ]
-              }
+              "legend": null
+            },
+            "tooltip": {
+              "value": null
             },
             "opacity": {
-              "field": "Gender",
-              "type": "nominal",
-              "scale": {
-                "domain": [
-                  "Male",
-                  "Female"
-                ],
-                "range": [
-                  0.8,
-                  0.25
-                ]
+              "value": 0.75
+            }
+          },
+          "layer": [
+            {
+              "mark": {
+                "type": "text",
+                "align": "right",
+                "baseline": "middle",
+                "fontSize": 20,
+                "dx": -3
               },
-              "legend": {
-                "title": null,
-                "orient": "bottom",
-                "direction": "horizontal",
-                "values": [
-                  "Male",
-                  "Female"
-                ]
+              "encoding": {
+                "text": {
+                  "aggregate": "min",
+                  "field": "party",
+                  "type": "nominal"
+                }
               }
             },
-            "tooltip": [
-              {
-                "field": "Legislator",
-                "type": "nominal"
+            {
+              "mark": {
+                "type": "text",
+                "align": "left",
+                "baseline": "middle",
+                "dx": 3,
+                "fontSize": 20
               },
-              {
-                "field": "Residence",
-                "type": "nominal"
-              },
-              {
-                "field": "party",
-                "type": "nominal"
-              },
-              {
-                "field": "Gender",
-                "type": "nominal"
+              "encoding": {
+                "text": {
+                  "aggregate": "distinct",
+                  "field": "Legislator",
+                  "type": "quantitative"
+                }
               }
-            ]
-          }
+            },
+            {
+              "mark": {
+                "type": "text",
+                "align": "left",
+                "baseline": "middle",
+                "dx": 28,
+                "fontSize": 14
+              },
+              "encoding": {
+                "text": {
+                  "aggregate": "min",
+                  "field": "text_seats",
+                  "type": "nominal"
+                }
+              }
+            }
+          ]
         }
-      ]
+      ],
+      "center": true,
+      "spacing": 20
     }
   ],
   "spacing": 100
