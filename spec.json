@@ -70,6 +70,9 @@
               "type": "temporal",
               "timeUnit": "year",
               "sort": "descending",
+              "scale": {
+                "domain": [1860, 2019]
+              },
               "axis": {
                 "title": "",
                 "values": [1860, 1875, 1900, 1925, 1950, 1975, 2000, 2018]
