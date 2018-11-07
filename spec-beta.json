@@ -52,6 +52,17 @@
                   },
                   {
                     "type": "touchstart"
+                  },
+                  {
+                    "type": "touchmove",
+                    "between": [
+                      {
+                        "type": "touchstart"
+                      },
+                      {
+                        "type": "touchend"
+                      }
+                    ]
                   }
                 ]
               },
