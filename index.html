@@ -28,12 +28,11 @@
   </div>
   
   <script>
-    const spec = "spec.json";
-  	vegaEmbed('#vis', spec, {
-      defaultStyle: true, 
-  	  tooltip: {sanitize: (value) => String(value)},
-  	  actions: false
-  	}).catch(console.warn);
+    var spec = "spec.json";
+    vegaEmbed('#vis', spec, {
+      defaultStyle: true,
+      tooltip: { sanitize: function sanitize(value) {return String(value);} },
+      actions: false }).catch(console.warn);
   </script>
 
 </body>
