@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vega@4.4.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@2.6.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@3.24.2"></script>
+</head>
+<body>
+  <div id="view"></div>
+  <script>
+    vegaEmbed(
+      '#view',
+      'https://vega.github.io/vega/examples/bar-chart.vg.json',
+      { { defaultStyle: true } }
+    );
+  </script>
+</body>
